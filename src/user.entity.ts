@@ -1,5 +1,5 @@
-import { Column, Double, Entity, IsNull, PrimaryGeneratedColumn } from "typeorm";
-import {  IsAlpha, IsDate, IsEmail, isInt, IsInt, IsNotEmpty, isNumber, IsPhoneNumber, IS_PHONE_NUMBER, Length, Min} from "class-validator";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {  IsAlpha, IsEmail, IsNotEmpty, Length} from "class-validator";
 
 @Entity("usersa")
 export class User{
