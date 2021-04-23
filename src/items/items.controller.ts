@@ -8,9 +8,16 @@ export class ItemsController {
 
     constructor(private  itemsService: ItemsService ){}
 
+
+
+
     @Get()
-    async getCars(){
-        return `item service`
+     getallItems(){
+        return this.itemsService.getallItems();
     }
+
+    
+
+
 
 }
