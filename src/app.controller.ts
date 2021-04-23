@@ -8,6 +8,15 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
 
+  @Get(':id')
+  getOne(@Param('id') id : number){
+    return this.appService.getOneById(id);
+
+  }
+
+
+
+
 
   @Post()
   create(
@@ -50,7 +59,7 @@ export class AppController {
 
 
   @Delete()
-  deleteuser(@Query('id') id: number){
+  deleteuser(@Query('id') id: number) {
     return this.appService.deleteUser(id);
 
   }
