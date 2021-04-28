@@ -31,9 +31,10 @@ export class AppService {
 
 
     const newUser = this.userRepository.create({ name, email, phone, dateofbirth });
-
+    
     const errors = await validate(newUser);
     if (errors.length > 0) {
+      throw errors
       throw new Error(`Validation failed! in create user ${errors}`);
     } else {
 

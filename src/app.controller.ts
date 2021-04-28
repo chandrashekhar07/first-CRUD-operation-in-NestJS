@@ -13,8 +13,8 @@ export class AppController {
 
 
   @Get(':id')
-   getOne(@Param('id') id: number) {
-    const data =  this.appService.getOneById(id)
+  async getOne(@Param('id') id: number) {
+    const data = await this.appService.getOneById(id)
 
       .then(response => {
         console.log("the responsee in then is.....", response)
@@ -22,11 +22,10 @@ export class AppController {
       })
 
       .catch(response => {
-        // console.log("the response in catch is...........", response)
-        // throw null
 
         throw response
       })
+
 
     console.log("the data is.........", data)
     return data
@@ -46,18 +45,18 @@ export class AppController {
     console.log("the received data in post request create funcations are")
     console.log(name, email, phone, dob);
 
-    const dataa= await this.appService.createUser(name, email, phone, dob)
-          .then(res => {
-            console.log("response in then  statement of post is",res)
-            return res
-          })
-          .catch(res => {
-            //console.log("response in catch stmmt of post is ::",res)
-            //return res
-            throw res
-          })
+    const dataa = await this.appService.createUser(name, email, phone, dob)
+      .then(res => {
+        console.log("response in then  statement of post is", res)
+        return res
+      })
+      .catch(res => {
+        //console.log("response in catch stmmt of post is ::",res)
+        //return res
+        throw res
+      })
 
-          return dataa;
+    return dataa;
 
   }
 
