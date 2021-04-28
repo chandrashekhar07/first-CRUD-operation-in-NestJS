@@ -1,10 +1,8 @@
 import { UseInterceptors } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { validate } from 'class-validator';
+import { validate, ValidationError } from 'class-validator';
 import { EntityNotFoundError, Repository } from 'typeorm';
-// import { User } from './user.entity';
-
 import { User } from "./entity/user.entity";
 import { NotFoundInterceptor } from './not-found.interceptor';
 
@@ -23,7 +21,7 @@ export class AppService {
   async getOneById(id: number): Promise<User> {
     var user1;
     user1 = await this.userRepository.findOneOrFail(id)
-    return  user1;
+    return user1;
   }
 
 
@@ -32,10 +30,7 @@ export class AppService {
   async createUser(name: string, email: string, phone: number, dateofbirth: any): Promise<User> {
 
 
-
-
-    const newUser = await this.userRepository.create({ name, email, phone, dateofbirth });
-
+    const newUser = this.userRepository.create({ name, email, phone, dateofbirth });
 
     const errors = await validate(newUser);
     if (errors.length > 0) {
@@ -44,7 +39,6 @@ export class AppService {
 
       return this.userRepository.save(newUser);
     }
-
 
 
   }

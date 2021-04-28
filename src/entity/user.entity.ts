@@ -10,7 +10,6 @@ export class User extends BaseEntity {
     id:number;
 
     @Column()
-    @Length(3, 50)
     @IsNotEmpty()
     @IsAlpha()
     name:string;
