@@ -1,10 +1,15 @@
+import { UseInterceptors } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { validate } from 'class-validator';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { EntityNotFoundError, Repository } from 'typeorm';
+// import { User } from './user.entity';
+
+import { User } from "./entity/user.entity";
+import { NotFoundInterceptor } from './not-found.interceptor';
 
 @Injectable()
+@UseInterceptors(NotFoundInterceptor)
 export class AppService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {
 
@@ -15,29 +20,18 @@ export class AppService {
   }
 
 
-  async getOneById(id: number): Promise< User > {
+  async getOneById(id: number): Promise<User> {
     var user1;
-    try {
-       
-      if (id)
-      {
-      user1 =await this.userRepository.findOneOrFail(id)
-      }
-      else {
-      console.log( "id is invalid");
-      }
-     return   await user1;
-    }
-    catch (err) {
-      console.log("error is " + err);
-      return (err)
-    }
-
+    user1 = await this.userRepository.findOneOrFail(id)
+    return  user1;
   }
+
+
+
 
   async createUser(name: string, email: string, phone: number, dateofbirth: any): Promise<User> {
 
-    
+
 
 
     const newUser = await this.userRepository.create({ name, email, phone, dateofbirth });
@@ -47,7 +41,7 @@ export class AppService {
     if (errors.length > 0) {
       throw new Error(`Validation failed! in create user ${errors}`);
     } else {
-    
+
       return this.userRepository.save(newUser);
     }
 
@@ -55,12 +49,12 @@ export class AppService {
 
   }
 
-  async updateUser(id: number, name?: string, email?: string,phone?:number, dob?: string): Promise<User> {
+  async updateUser(id: number, name?: string, email?: string, phone?: number, dob?: string): Promise<User> {
     const user = await this.getOneById(id);
     user.name = name || user.name;
     user.email = email || user.email;
     user.dateofbirth = dob || user.dateofbirth;
-    user.phone  = phone||  user.phone;
+    user.phone = phone || user.phone;
     return this.userRepository.save(user);
 
   }

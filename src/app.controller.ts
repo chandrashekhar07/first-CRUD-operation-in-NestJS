@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseInterceptors } from '@nestjs/common';
+import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import { AppService } from './app.service';
-import { User } from './user.entity';
+import { User } from './entity/user.entity';
+import { NotFoundInterceptor } from './not-found.interceptor';
 
 
 @Controller('users')
+
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
@@ -13,8 +16,6 @@ export class AppController {
     return this.appService.getOneById(id);
 
   }
-
-
 
 
 
