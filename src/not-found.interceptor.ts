@@ -37,7 +37,7 @@ export class NotFoundInterceptor implements NestInterceptor {
               method: request.method,
               body: request.body
             },
-            message: error.message || error[0].constraints,
+            message: error.message ,
             http_status: response.statusCode,        //error code not working properly
             response_time: Date.now() - now,
           };

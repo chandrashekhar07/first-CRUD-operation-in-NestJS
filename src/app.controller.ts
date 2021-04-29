@@ -1,13 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseInterceptors } from '@nestjs/common';
-import { response } from 'express';
-import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import { AppService } from './app.service';
 import { User } from './entity/user.entity';
-import { NotFoundInterceptor } from './not-found.interceptor';
+
 
 
 @Controller('users')
-@UseInterceptors(NotFoundInterceptor)
+
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
@@ -26,7 +24,7 @@ export class AppController {
         throw response
       })
 
-
+     
     console.log("the data is.........", data)
     return data
 
@@ -64,10 +62,8 @@ export class AppController {
 
 
   @Get()
-  getDocs(@Query('id') id: number): Promise<User[] | User> {
-    if (id)
-      return this.appService.getOneById(id);
-    else
+  getDocs(): Promise<User[] | User> {
+   
       return this.appService.getAll();
 
   }
@@ -83,14 +79,21 @@ export class AppController {
     @Body('dob') dob: any
   ) {
     console.log(id, name, email, phone, dob)
+    if (!id)
+    throw new Error("you must provide id")
     return this.appService.updateUser(id, name, email, phone, dob)
   }
 
 
-  @Delete()
-  deleteuser(@Query('id') id: number) {
+  @Delete(':id')
+  deleteuser(@Param('id') id: number) {
+    console.log("id is............",id)
     return this.appService.deleteUser(id);
 
   }
+
+
+
+
 
 }
