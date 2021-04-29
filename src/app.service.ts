@@ -34,7 +34,7 @@ export class AppService {
     
     const errors = await validate(newUser);
     if (errors.length > 0) {
-      throw errors
+     // throw errors
       throw new Error(`Validation failed! in create user ${errors}`);
     } else {
 

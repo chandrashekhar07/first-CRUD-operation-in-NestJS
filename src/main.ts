@@ -5,7 +5,7 @@ import { NotFoundInterceptor } from './not-found.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  //app.useGlobalInterceptors(new NotFoundInterceptor);
+  app.useGlobalInterceptors(new NotFoundInterceptor);
   app.useGlobalFilters(new ErrorFilter)
   await app.listen(3000);
 }

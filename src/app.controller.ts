@@ -25,7 +25,6 @@ export class AppController {
       })
 
      
-    console.log("the data is.........", data)
     return data
 
   }
