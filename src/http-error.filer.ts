@@ -1,21 +1,14 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
 
 
-
-
-
 @Catch()
 export class ErrorFilter implements ExceptionFilter {
     now = new Date().getTime();
-
-
 
     catch(exception: any, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
         const request = ctx.getRequest();
         const response = ctx.getResponse();
-
-
 
         const errorContent: IErrorContent = {
             
@@ -32,8 +25,6 @@ export class ErrorFilter implements ExceptionFilter {
             data: null,
             timestamp: new Date().toLocaleTimeString()
         };
-
-
 
         response.status(errorContent.status).json({ errorContent })
 

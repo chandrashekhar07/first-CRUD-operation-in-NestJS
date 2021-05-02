@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators';
 export class NotFoundInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const now = new Date().getTime()
-   
+
     return next.handle()
       .pipe(
 
@@ -20,7 +20,7 @@ export class NotFoundInterceptor implements NestInterceptor {
           const path = `${request.protocol}://${request.hostname}${request.originalUrl}`;
 
           const dataObject: IErrorContent = {
-           
+
             message: "",
             data,
             status,
@@ -37,12 +37,9 @@ export class NotFoundInterceptor implements NestInterceptor {
             timestamp: new Date().toLocaleTimeString()
 
           }
-         
-         
+
 
           console.log("the dataObject is", dataObject);
-        
-
           response.status(dataObject.status).json({ dataObject })
 
 
